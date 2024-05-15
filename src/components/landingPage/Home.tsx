@@ -1,9 +1,8 @@
-import React from 'react';
 import './home.css';
 import logo from '../../images/banner-image.png';
 import { useNavigate } from 'react-router-dom';
 
-const Home: React.FC = () => {
+const Home  = () => {
   const navigate = useNavigate();
   
   return (

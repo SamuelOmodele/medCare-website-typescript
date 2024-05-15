@@ -1,8 +1,7 @@
-import React from 'react';
 import './healthcareprovider.css';
 import banner from '../../images/health-care-img.png';
 
-const HealthCareProvider: React.FC = () => {
+const HealthCareProvider = () => {
   return (
     <div className='healthcareprovider'>
       <div className="image">

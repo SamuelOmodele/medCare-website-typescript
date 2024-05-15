@@ -5,24 +5,19 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useNavigate } from 'react-router-dom';
 
-const Appointment: React.FC = () => {
+const Appointment = () => {
   const [appointmentDate, setAppointmentDate] = useState<string>('');
   const [appointmentTime, setAppointmentTime] = useState<string>('');
   const [appointmentMsg, setAppointmentMsg] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      console.log('Email: ', auth.currentUser.email);
-    }
-  }, []);
 
   const bookAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       await addDoc(collection(db, 'AppointmentRecord'), {
-        email: auth.currentUser?.email,
+        email: userEmail,
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,
         appointmentMsg: appointmentMsg,
@@ -34,6 +29,16 @@ const Appointment: React.FC = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    let current_user = localStorage.getItem('userEmail');
+    if (current_user) {
+      setUserEmail(current_user);
+    } else {
+      console.log('User not found');
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <div className='appointment'>

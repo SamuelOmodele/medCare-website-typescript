@@ -1,8 +1,7 @@
-import React from 'react';
 import appimage from '../../images/download-image.png';
 import './ourapp.css';
 
-const OurApp: React.FC = () => {
+const OurApp = () => {
   return (
     <div className='ourapp'>
       <div className="content">

@@ -52,10 +52,11 @@ const Sidebar: React.FC<SidebarProps> = ({ current }) => {
   }
 
   useEffect(() => {
-    let current_user : any = auth.currentUser;
+    let current_user = localStorage.getItem('userEmail');
     if (current_user) {
-      console.log(current_user);
-      fetchCurrentUser(current_user.email);
+      fetchCurrentUser(current_user)
+    } else {
+      console.log('User not found')
     }
   }, []);
 

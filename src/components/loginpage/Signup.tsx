@@ -7,7 +7,7 @@ import { auth } from '../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
-const Signup: React.FC = () => {
+const Signup = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');

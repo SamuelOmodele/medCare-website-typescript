@@ -3,7 +3,7 @@ import './services.css';
 import { services } from '../../Data';
 import { useNavigate } from 'react-router-dom';
 
-const Services: React.FC = () => {
+const Services = () => {
     const navigate = useNavigate();
 
     return (

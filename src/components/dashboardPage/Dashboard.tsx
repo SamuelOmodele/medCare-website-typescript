@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './dashboard.css';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../config/firebase';
 import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+
 
 interface Appointment {
   email: string;
@@ -20,13 +20,25 @@ interface Service {
   description: string;
 }
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [userAppointmentList, setUserAppointmentList] = useState<Appointment[]>([]);
   const [comingSoonAlert, setComingSoonAlert] = useState<boolean>(false);
   const [activeAppointment, setActiveAppointment] = useState<Appointment | null>(null);
 
+  useEffect(() => {
+    let current_user = localStorage.getItem('userEmail');
+    if (current_user) {
+      fetchCurrentUser(current_user);
+      fetchUserAppointment(current_user);
+    } else {
+      console.log('User not found');
+      navigate('/login');
+    }
+  }, []);
+
+  // --- fetch appointment using the user email ---
   const fetchUserAppointment = async (email: string) => {
     try {
       const q = query(collection(db, 'AppointmentRecord'), where('email', '==', email));
@@ -48,7 +60,9 @@ const Dashboard: React.FC = () => {
       const docRef = doc(db, 'AppointmentRecord', id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
+
         setUserAppointmentList(prevAppointments => [...prevAppointments, docSnap.data() as Appointment]);
+        
       } else {
         console.log("Document not found");
       }
@@ -57,6 +71,7 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  // --- fetch the user data using the user email ---
   const fetchCurrentUser = async (email: string) => {
     try {
       const q = query(collection(db, 'UserRecord'), where('email', '==', email));
@@ -64,6 +79,7 @@ const Dashboard: React.FC = () => {
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           fetchDocument(doc.id);
+          console.log('Hi', doc.id)
         });
       } else {
         console.log("User data not found");
@@ -87,16 +103,6 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    let current_user = auth.currentUser?.email;
-
-    if (current_user) {
-      console.log(current_user);
-      fetchCurrentUser(current_user);
-      fetchUserAppointment(current_user);
-    }
-  }, []);
-
   const goToAppointment = () => {
     console.log('testing');
     navigate('/appointment');
@@ -106,6 +112,7 @@ const Dashboard: React.FC = () => {
     setComingSoonAlert(true);
   }
 
+  // --- services
   const services: Service[] = [
     {
       functionCall: comingSoon,
@@ -142,11 +149,13 @@ const Dashboard: React.FC = () => {
         Coming Soon
         <span className="material-symbols-outlined" onClick={() => setComingSoonAlert(false)}>close</span>
       </div>}
+      
       <div className='body-section'>
         {user && <>
           <div className="container">
             <p className='head-text'><span className="material-symbols-outlined">Dashboard</span> Dashboard</p>
             <div className="boxes">
+
               {services.map((service, index) => (
                 <div className="box" onClick={service.functionCall} key={index}>
                   <span className="material-symbols-outlined">{service.icon}</span>
@@ -156,12 +165,14 @@ const Dashboard: React.FC = () => {
                   </div>
                 </div>
               ))}
+              
             </div>
             <div className="container2">
               <p className='head-text'><span className="material-symbols-outlined">list</span> Electronic History</p>
               {userAppointmentList.length === 0 && <p>No Appointment Created yet</p>}
-              <div className="medical-list">
-                {userAppointmentList.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).map((appointment, index) => (
+
+              {userAppointmentList.length > 0 && <div className="medical-list">
+                {userAppointmentList.map((appointment, index) => (
                   <div className="row" key={index}>
                     <i className='bx bx-plus-medical'></i>
                     <div>
@@ -171,23 +182,28 @@ const Dashboard: React.FC = () => {
                     <i className='bx bx-right-arrow-alt right-arrow' onClick={() => setActiveAppointment(appointment)}></i>
                   </div>
                 ))}
-              </div>
+              </div>}
+              
             </div>
+            
             {activeAppointment &&
               <>
                 <div className="background"></div>
-                <div className="appointment-form modal">
+                <div className="appointment-form modal rounded-border">
                   <form action="">
                     <span className="material-symbols-outlined" onClick={() => setActiveAppointment(null)}>close</span>
                     <h2>Appointment Schedule</h2>
                     <div className="form-control">
-                      <input type="date" name="date" id="date" value={activeAppointment.appointmentDate} />
+                      <label htmlFor="">Appointment Date</label>
+                      <input type="date" name="date" id="date" defaultValue={activeAppointment.appointmentDate} />
                     </div>
                     <div className="form-control">
-                      <input type="time" name="time" id="time" value={activeAppointment.appointmentTime} />
+                      <label htmlFor="">Appointment Time</label>
+                      <input type="time" name="time" id="time" defaultValue={activeAppointment.appointmentTime} />
                     </div>
                     <div className="form-control">
-                      <textarea name="message" id="message" cols={30} rows={10} placeholder='Enter your message ...' style={{ resize: 'none' }} value={activeAppointment.appointmentMsg} required></textarea>
+                      <label htmlFor="">Message</label>
+                      <textarea name="message" id="message" cols={30} rows={10} placeholder='Enter your message ...' style={{ resize: 'none' }} defaultValue={activeAppointment.appointmentMsg} required></textarea>
                     </div>
                   </form>
                 </div>
