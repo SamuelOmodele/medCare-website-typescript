@@ -1,11 +1,11 @@
-import React from 'react'
-import './services.css'
-import { services } from '../../Data'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import './services.css';
+import { services } from '../../Data';
+import { useNavigate } from 'react-router-dom';
 
-const Services = () => {
-
+const Services: React.FC = () => {
     const navigate = useNavigate();
+
     return (
         <div className='services'>
             <div className="texts">
@@ -22,11 +22,8 @@ const Services = () => {
                 ))}
             </div>
             <button onClick={() => navigate('/login')}>Learn More</button>
-
         </div>
-
-
-    )
+    );
 }
 
-export default Services
+export default Services;

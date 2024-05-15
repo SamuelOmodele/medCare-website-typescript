@@ -1,56 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import './login.css'
-import login_img from '../../images/new_login-removebg-preview.png'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import './login.css';
+import login_img from '../../images/new_login-removebg-preview.png';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login = () => {
-
+const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-
 
   useEffect(() => {
     auth.signOut(); // Sign out the current user when the component mounts
   }, []);
-  
 
-  const dashboard_redirect = () => {
-    // navigate('/dashboard')
-  }
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    try{
-      await signInWithEmailAndPassword(auth, email, password)
-      alert('LOGIN SUCCESSFUL')
-      navigate('/dashboard');
-    } catch ( error){
-      if (error.code === 'auth/network-request-failed'){
-        setErrorMsg('No connection')
-      } else if (error.code === 'auth/invalid-credential'){
-        setErrorMsg('invalid Email or Password');
-      } else {
-        setErrorMsg(error.code)
-      }
-      console.log(error)
-    }
 
-  }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('LOGIN SUCCESSFUL');
+      navigate('/dashboard');
+    } catch (error : any) {
+      if (error.code === 'auth/network-request-failed') {
+        setErrorMsg('No connection');
+      } else if (error.code === 'auth/invalid-credential') {
+        setErrorMsg('Invalid Email or Password');
+      } else {
+        setErrorMsg(error.code);
+      }
+      console.log(error);
+    }
+  };
 
   return (
     <div className='login'>
-      {errorMsg !== '' && 
-      <div className='error'>
-        <span class="material-symbols-outlined">error</span>
-        <span className='error-text'> {errorMsg}</span>
-        <span class="material-symbols-outlined" onClick={() => setErrorMsg('')}>close</span>
-      </div>}
+      {errorMsg !== '' && (
+        <div className='error'>
+          <span className="material-symbols-outlined">error</span>
+          <span className='error-text'> {errorMsg}</span>
+          <span className="material-symbols-outlined" onClick={() => setErrorMsg('')}>close</span>
+        </div>
+      )}
       <div className="card">
         <div className="login-form">
           <h2>Login</h2>
@@ -61,10 +53,10 @@ const Login = () => {
             </div>
             <div className="form-control">
               <label htmlFor="password">Password</label>
-              <input type="password" placeholder='Enter Password . . .' id='passwowrd' value={password} onChange={(e) => setPassword(e.target.value)} required/>
+              <input type="password" placeholder='Enter Password . . .' id='password' value={password} onChange={(e) => setPassword(e.target.value)} required/>
             </div>
             <div className="form-control">
-              <button type='submit' onClick={dashboard_redirect}>Login</button>
+              <button type='submit'>Login</button>
               <span className='forgot'>forgot password</span>
             </div>
             <div className="form-control">
@@ -78,7 +70,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
