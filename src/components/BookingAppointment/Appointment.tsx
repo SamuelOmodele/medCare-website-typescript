@@ -46,6 +46,11 @@ const Appointment = () => {
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
+
+      <div className="back" onClick={() => navigate(-1)}>
+        <span className="material-symbols-outlined back-arrow" >arrow_back</span>
+      </div>
+
       <div className="appointment-form">
         <form action="" onSubmit={bookAppointment}>
           <h2>Book an Appointment</h2>
@@ -66,6 +71,7 @@ const Appointment = () => {
           </div>
         </form>
       </div>
+
     </div>
   );
 };

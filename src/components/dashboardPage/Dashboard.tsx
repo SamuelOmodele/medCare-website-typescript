@@ -80,7 +80,6 @@ const Dashboard = () => {
     }
   }
   
-
   // --- fetch the user data using the user email ---
   const fetchCurrentUser = async (email: string) => {
     try {
@@ -153,6 +152,7 @@ const Dashboard = () => {
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
+      
       {comingSoonAlert && <div className="coming-soon-alert">
         Coming Soon
         <span className="material-symbols-outlined" onClick={() => setComingSoonAlert(false)}>close</span>
