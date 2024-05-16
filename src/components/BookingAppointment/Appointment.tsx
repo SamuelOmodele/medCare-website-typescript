@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './appointment.css';
-import { auth } from '../config/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 const Appointment = () => {
   const [appointmentDate, setAppointmentDate] = useState<string>('');
@@ -17,6 +17,7 @@ const Appointment = () => {
 
     try {
       await addDoc(collection(db, 'AppointmentRecord'), {
+        uniqueId: v4(),
         email: userEmail,
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,

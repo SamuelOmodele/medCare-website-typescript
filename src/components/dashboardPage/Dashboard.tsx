@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 
+
 interface Appointment {
+  uniqueId: string;
   email: string;
   appointmentDate: string;
   appointmentTime: string;
@@ -26,6 +28,7 @@ const Dashboard = () => {
   const [userAppointmentList, setUserAppointmentList] = useState<Appointment[]>([]);
   const [comingSoonAlert, setComingSoonAlert] = useState<boolean>(false);
   const [activeAppointment, setActiveAppointment] = useState<Appointment | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let current_user = localStorage.getItem('userEmail');
@@ -59,10 +62,16 @@ const Dashboard = () => {
     try {
       const docRef = doc(db, 'AppointmentRecord', id);
       const docSnap = await getDoc(docRef);
+      
       if (docSnap.exists()) {
-
-        setUserAppointmentList(prevAppointments => [...prevAppointments, docSnap.data() as Appointment]);
+        const newAppointment = docSnap.data() as Appointment;
         
+        // Check if the appointment ID already exists in the userAppointmentList
+        if (!userAppointmentList.some(appointment => appointment.uniqueId === newAppointment.uniqueId)) {
+          setUserAppointmentList(prevAppointments => [...prevAppointments, newAppointment]);
+        } else {
+          console.log("Appointment already exists in the list");
+        }
       } else {
         console.log("Document not found");
       }
@@ -70,6 +79,7 @@ const Dashboard = () => {
       console.error("Error fetching document:", error);
     }
   }
+  
 
   // --- fetch the user data using the user email ---
   const fetchCurrentUser = async (email: string) => {
@@ -79,7 +89,6 @@ const Dashboard = () => {
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
           fetchDocument(doc.id);
-          console.log('Hi', doc.id)
         });
       } else {
         console.log("User data not found");
@@ -104,7 +113,6 @@ const Dashboard = () => {
   }
 
   const goToAppointment = () => {
-    console.log('testing');
     navigate('/appointment');
   }
 
@@ -141,7 +149,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className='dashboard'>
+    <div className='dashboard' ref={contentRef}>
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
@@ -154,8 +162,8 @@ const Dashboard = () => {
         {user && <>
           <div className="container">
             <p className='head-text'><span className="material-symbols-outlined">Dashboard</span> Dashboard</p>
+            
             <div className="boxes">
-
               {services.map((service, index) => (
                 <div className="box" onClick={service.functionCall} key={index}>
                   <span className="material-symbols-outlined">{service.icon}</span>
@@ -165,12 +173,11 @@ const Dashboard = () => {
                   </div>
                 </div>
               ))}
-              
             </div>
+
             <div className="container2">
               <p className='head-text'><span className="material-symbols-outlined">list</span> Electronic History</p>
               {userAppointmentList.length === 0 && <p>No Appointment Created yet</p>}
-
               {userAppointmentList.length > 0 && <div className="medical-list">
                 {userAppointmentList.map((appointment, index) => (
                   <div className="row" key={index}>
@@ -180,10 +187,10 @@ const Dashboard = () => {
                       <p>Date: {appointment.appointmentDate} | Time: {appointment.appointmentTime}</p>
                     </div>
                     <i className='bx bx-right-arrow-alt right-arrow' onClick={() => setActiveAppointment(appointment)}></i>
+                    <span className="material-symbols-outlined right-arrow" style={{right: '10px', fontSize: '20px'}}>more_vert</span>
                   </div>
                 ))}
               </div>}
-              
             </div>
             
             {activeAppointment &&
