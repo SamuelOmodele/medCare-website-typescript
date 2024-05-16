@@ -16,9 +16,8 @@ type SidebarProps = {
   current: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ current }) => {
+const Sidebar = ({ current } : SidebarProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const navigate = useNavigate();
 
   const fetchCurrentUser = async (email: string) => {
     try {
