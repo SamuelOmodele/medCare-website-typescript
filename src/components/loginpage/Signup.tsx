@@ -25,8 +25,10 @@ const Signup = () => {
 
     if (password.length < 6) {
       setErrorMsg('Password must be at least 6 characters');
+      window.scrollTo({top: 0, behavior: 'smooth'})
     } else if (password !== confirmPassword) {
       setErrorMsg('Passwords do not match');
+      window.scrollTo({top: 0, behavior: 'smooth'})
     } else {
       try {
         await createUserWithEmailAndPassword(auth, email, password);
@@ -39,6 +41,7 @@ const Signup = () => {
         navigate('/login');
       } catch (error: any) {
         setErrorMsg(error.code);
+        window.scrollTo({top: 0, behavior: 'smooth'})
         console.log(error);
       }
     }

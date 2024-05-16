@@ -12,7 +12,9 @@ const Login: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    auth.signOut(); // Sign out the current user when the component mounts
+    auth.signOut();
+    localStorage.removeItem("userEmail");
+    console.log(localStorage)
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,9 +27,11 @@ const Login: React.FC = () => {
       navigate('/dashboard');
     } catch (error : any) {
       if (error.code === 'auth/network-request-failed') {
+        window.scrollTo({top: 0, behavior: 'smooth'})
         setErrorMsg('No connection');
       } else if (error.code === 'auth/invalid-credential') {
         setErrorMsg('Invalid Email or Password');
+        window.scrollTo({top: 0, behavior: 'smooth'})
       } else {
         setErrorMsg(error.code);
       }

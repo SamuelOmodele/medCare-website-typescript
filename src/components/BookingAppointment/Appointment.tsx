@@ -6,21 +6,25 @@ import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 const Appointment = () => {
+
+  // --- state variables ---
   const [appointmentDate, setAppointmentDate] = useState<string>('');
   const [appointmentTime, setAppointmentTime] = useState<string>('');
+  const [appointmentTitle, setAppointmentTitle] = useState<string>('');
   const [appointmentMsg, setAppointmentMsg] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
   const navigate = useNavigate();
 
+  // --- function to book an appointment when the form is submitted ---
   const bookAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       await addDoc(collection(db, 'AppointmentRecord'), {
         uniqueId: v4(),
         email: userEmail,
         appointmentDate: appointmentDate,
         appointmentTime: appointmentTime,
+        appointmentTitle: appointmentTitle,
         appointmentMsg: appointmentMsg,
         createdAt: new Date()
       });
@@ -31,6 +35,7 @@ const Appointment = () => {
     }
   };
 
+  // --- useEffect hook, to fetch the user data, and appointment list from the firestore database on page load ---
   useEffect(() => {
     let current_user = localStorage.getItem('userEmail');
     if (current_user) {
@@ -41,6 +46,7 @@ const Appointment = () => {
     }
   }, []);
 
+  // --- render ---
   return (
     <div className='appointment'>
       <div className="dashboard-nav">
@@ -61,6 +67,10 @@ const Appointment = () => {
           <div className="form-control">
             <label htmlFor="date">Time</label>
             <input type="time" name="time" id="time" value={appointmentTime} onChange={(e) => setAppointmentTime(e.target.value)} required />
+          </div>
+          <div className="form-control">
+            <label htmlFor=''>Title</label>
+            <input type="text" name="title" id="title" placeholder='Title ...' value={appointmentTitle} onChange={(e) => setAppointmentTitle(e.target.value)} required max={15} />
           </div>
           <div className="form-control">
             <label htmlFor="message">Enter Message</label>

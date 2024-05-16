@@ -15,9 +15,9 @@ const Navigation  = ({ current_link } : NavigationProps) => {
       </div>
       <ul>
         <li className={current_link === 'home' ? 'active' : ''}><Link to='/'>Home</Link></li>
-        <li className={current_link === 'services' ? 'active' : ''}><Link to='/services'>Services</Link></li>
-        <li className={current_link === 'apps' ? 'active' : ''}><Link to='/apps'>Apps</Link></li>
-        <li className={current_link === 'about us' ? 'active' : ''}><Link to='/about-us'>About us</Link></li>
+        <li className={current_link === 'services' ? 'active' : ''}><Link to=''>Services</Link></li>
+        <li className={current_link === 'apps' ? 'active' : ''}><Link to=''>Apps</Link></li>
+        <li className={current_link === 'about us' ? 'active' : ''}><Link to=''>About us</Link></li>
         <li className={current_link === 'login' ? 'active' : ''}><Link to='/login'>Login</Link></li>
       </ul>
     </nav>
