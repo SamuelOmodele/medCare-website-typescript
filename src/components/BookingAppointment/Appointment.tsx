@@ -69,7 +69,7 @@ const Appointment = () => {
             <input type="time" name="time" id="time" value={appointmentTime} onChange={(e) => setAppointmentTime(e.target.value)} required />
           </div>
           <div className="form-control">
-            <label htmlFor=''>Title</label>
+            <label htmlFor=''>Title <small>(15 characters max)</small></label>
             <input type="text" name="title" id="title" placeholder='Title ...' value={appointmentTitle} onChange={(e) => setAppointmentTitle(e.target.value)} required max={15} />
           </div>
           <div className="form-control">

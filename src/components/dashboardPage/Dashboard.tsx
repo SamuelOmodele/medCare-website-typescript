@@ -23,12 +23,15 @@ type Service = {
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  // --- state vaariables ---
   const [user, setUser] = useState<any>(null);
   const [userAppointmentList, setUserAppointmentList] = useState<Appointment[]>([]);
   const [comingSoonAlert, setComingSoonAlert] = useState<boolean>(false);
   const [activeAppointment, setActiveAppointment] = useState<Appointment | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // --- fetch user data from firestore database using the email
   useEffect(() => {
     let current_user = localStorage.getItem('userEmail');
     if (current_user) {
@@ -110,6 +113,7 @@ const Dashboard = () => {
     }
   }
 
+  // --- navigate to appointment page
   const goToAppointment = () => {
     navigate('/appointment');
   }
@@ -146,6 +150,17 @@ const Dashboard = () => {
     },
   ];
 
+  // --- scroll to top of the page when appointment is 
+  useEffect(() => {
+    if (activeAppointment) {
+      contentRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+  }, [activeAppointment])
+
   return (
     <div className='dashboard' ref={contentRef}>
       <div className="dashboard-nav">
@@ -181,12 +196,12 @@ const Dashboard = () => {
               {userAppointmentList.length > 0 && <div className="medical-list">
                 {userAppointmentList
                 .slice()
-                .sort((a, b) => {
+                .sort((a, b) => { // --- to sort appointment, latest comes first ---
                   const dateA = new Date(`${a.appointmentDate} ${a.appointmentTime}`).getTime();
                   const dateB = new Date(`${b.appointmentDate} ${b.appointmentTime}`).getTime();
                   return dateA - dateB; // Sort in descending order
                 })
-                .map((appointment, index) => {
+                .map((appointment, index) => { // --- sort display time in 12 hour format
                   const appointmentDateTime = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
                   const appointmentTime = appointmentDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                   

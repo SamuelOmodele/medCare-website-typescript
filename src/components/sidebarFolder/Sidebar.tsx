@@ -7,12 +7,12 @@ import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firesto
 import { db } from '../config/firebase';
 import { useNavigate } from 'react-router-dom';
 
-interface User {
+type User = {
   name: string;
   email: string;
 }
 
-interface SidebarProps {
+type SidebarProps = {
   current: string;
 }
 

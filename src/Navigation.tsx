@@ -2,7 +2,7 @@ import React from 'react'
 import './navigation.css'
 import { Link } from 'react-router-dom'
 
-interface NavigationProps {
+type NavigationProps = {
   current_link: string;
 }
 

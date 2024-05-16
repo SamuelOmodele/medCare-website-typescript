@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './medicalservices.css';
 import { useNavigate } from 'react-router-dom';
 
-interface Service {
+type Service = {
   functionCall: () => void;
   icon: string;
   title: string;

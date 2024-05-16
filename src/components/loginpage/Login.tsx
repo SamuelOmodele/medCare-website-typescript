@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
