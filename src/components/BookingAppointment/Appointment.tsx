@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './appointment.css';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
@@ -13,11 +13,32 @@ const Appointment = () => {
   const [appointmentTitle, setAppointmentTitle] = useState<string>('');
   const [appointmentMsg, setAppointmentMsg] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  const pageRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
 
   // --- function to book an appointment when the form is submitted ---
   const bookAppointment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const current_date_time = new Date();
+    const appointmentDateTime = new Date(`${appointmentDate}T${appointmentTime}`);
+
+    if (appointmentDateTime < current_date_time){
+      // alert('Appointment date and time must be in the future! ')
+      setErrorMsg('Appointment date and time must be in the future! ');
+
+      pageRef.current?.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+
+      return;
+    }
+
+    setErrorMsg('');
+
     try {
       await addDoc(collection(db, 'AppointmentRecord'), {
         uniqueId: v4(),
@@ -48,10 +69,20 @@ const Appointment = () => {
 
   // --- render ---
   return (
-    <div className='appointment'>
+    <div className='appointment' ref={pageRef}>
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
+
+      {errorMsg !== '' && (
+        <div className="error-appointment">
+          <span className="material-symbols-outlined">error</span>
+          <span className="error-text"> {errorMsg}</span>
+          <span className="material-symbols-outlined" onClick={() => setErrorMsg('')}>
+            close
+          </span>
+        </div>
+      )}
 
       <div className="back" onClick={() => navigate(-1)}>
         <span className="material-symbols-outlined back-arrow" >arrow_back</span>

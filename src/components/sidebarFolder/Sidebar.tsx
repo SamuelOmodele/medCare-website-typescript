@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './sidebar.css';
 import userImg from '../../images/user-icon.png';
 import { Link } from 'react-router-dom';
-import { auth } from '../config/firebase';
 import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { useNavigate } from 'react-router-dom';
 
 type User = {
   name: string;

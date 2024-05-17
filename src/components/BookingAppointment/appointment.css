@@ -87,3 +87,42 @@ button.btn-appointment{
 button.btn-appointment:hover{
     box-shadow: none;
 }
+.error-appointment{
+    position: absolute;
+    background-color: #f64545;
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.45);
+    top: 40px;
+    animation-name: slideDown;
+    animation-duration: .25s;
+    left: 50%;
+    top: 100px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+.error-text{
+    margin-right: 20px;
+}
+.error-appointment span{
+    color: white;
+}
+.error-appointment span:nth-child(1){
+    margin-right: 15px;
+}
+.error-appointment span:nth-child(3){
+    margin-left: auto;
+    cursor: pointer;
+}
+@keyframes slideDown {
+    0%{
+        top: 90px;
+        opacity: 0;
+    } 100% {
+        top: 100px;
+        opacity: 1;
+    }
+}

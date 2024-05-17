@@ -30,6 +30,7 @@ const Dashboard = () => {
   const [comingSoonAlert, setComingSoonAlert] = useState<boolean>(false);
   const [activeAppointment, setActiveAppointment] = useState<Appointment | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [activeEditDeleteID, setActiveEditDeleteID] = useState<string | null>(null);
 
   // --- fetch user data from firestore database using the email
   useEffect(() => {
@@ -150,11 +151,22 @@ const Dashboard = () => {
     },
   ];
 
+  const setID = (id : string) => {
+    if (!activeEditDeleteID){
+      setActiveEditDeleteID(id);
+    } else {
+      setActiveEditDeleteID(null);
+    }
+  }
+
+  
+
   // --- scroll to top of the page when appointment is 
   useEffect(() => {
     if (activeAppointment) {
+
       contentRef.current?.scrollTo({
-        top: 0,
+        top: 80,
         behavior: 'smooth'
       });
     }
@@ -212,9 +224,12 @@ const Dashboard = () => {
                       <h3>Appointment - {appointment.appointmentTitle}</h3>
                       <p>Date: {appointment.appointmentDate} | Time: {appointmentTime}</p>
                     </div>
-                    {/* <i className='bx bx-right-arrow-alt right-arrow' onClick={() => setActiveAppointment(appointment)}></i> */}
                     <span className="material-symbols-outlined right-arrow first" onClick={() => setActiveAppointment(appointment)}>info_i</span>
-                    <span className="material-symbols-outlined right-arrow" style={{right: '10px', fontSize: '20px'}}>more_vert</span>
+                    <span className="material-symbols-outlined right-arrow more" style={{right: '10px', fontSize: '20px'}} onClick={() => setID(appointment.uniqueId)}>more_vert</span>
+                    {(activeEditDeleteID === appointment.uniqueId) && <div className="edit-delete-box">
+                      <span className="material-symbols-outlined edit-delete" >edit</span>
+                      <span className="material-symbols-outlined edit-delete" >delete</span>
+                    </div>}
                   </div>)
 
                 })}
