@@ -71,7 +71,7 @@ const Sidebar = ({ current } : SidebarProps) => {
           <li className={current === 'Dashboard' ? 'active-link' : ''}><span className="material-symbols-outlined">Dashboard</span><Link to='/dashboard'>Dashboard</Link></li>
           <li className={current === 'Services' ? 'active-link' : ''}><i className='bx bx-list-ul'></i><Link to='/services'>Services</Link></li>
           <li className={current === 'Orders' ? 'active-link' : ''}><span className="material-symbols-outlined">orders</span><Link to=''>Orders</Link></li>
-          <li className={current === 'Appointments' ? 'active-link' : ''}><span className="material-symbols-outlined">schedule</span><Link to=''>Appointments</Link></li>
+          <li className={current === 'Appointments' ? 'active-link' : ''}><span className="material-symbols-outlined">schedule</span><Link to='/appointments'>Appointments</Link></li>
         </ul>
       </div>
       <div className="menu bottom">

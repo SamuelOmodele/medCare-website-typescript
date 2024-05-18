@@ -15,7 +15,7 @@ const MedicalServices: React.FC = () => {
 
   const goToAppointment = () => {
     console.log('testing');
-    navigate('/appointment');
+    navigate('/schedule-appointment');
   };
 
   const comingSoon = () => {

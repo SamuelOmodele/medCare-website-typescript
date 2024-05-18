@@ -116,7 +116,7 @@ const Dashboard = () => {
 
   // --- navigate to appointment page
   const goToAppointment = () => {
-    navigate('/appointment');
+    navigate('/schedule-appointment');
   }
 
   const comingSoon = () => {
@@ -159,6 +159,7 @@ const Dashboard = () => {
     }
   }
 
+  // -- 
   const deleteAppointment = async(id : string) => {
     try{
       const appointmentQuery = query(collection(db, 'AppointmentRecord'), where("uniqueId", "==", id ));
@@ -179,8 +180,6 @@ const Dashboard = () => {
       console.log('error deleting appointment', error);
     }
   }
-
-  
 
   // --- scroll to top of the page when appointment is 
   useEffect(() => {
@@ -254,7 +253,6 @@ const Dashboard = () => {
                     <span className="material-symbols-outlined right-arrow first" onClick={() => setActiveAppointment(appointment)}>info_i</span>
                     <span className="material-symbols-outlined right-arrow more" style={{right: '10px', fontSize: '20px'}} onClick={() => setID(appointment.uniqueId)}>more_vert</span>
                     {(activeEditDeleteID === appointment.uniqueId) && <div className="edit-delete-box">
-                      {/* <span className="material-symbols-outlined edit-delete" >edit</span> */}
                       <span onClick={() => deleteAppointment(appointment.uniqueId)}>Delete<span className="material-symbols-outlined edit-delete">delete</span></span>
                     </div>}
                   </div>)

@@ -55,10 +55,18 @@ function App() {
         </div>
         }/>
 
-        <Route path='/appointment' element={
+        <Route path='/schedule-appointment' element={
         <div className='flex'>
           <Sidebar current={'Services'}/>
           <Appointment />
+          
+        </div>
+        }/>
+
+        <Route path='/appointments' element={
+        <div className='flex'>
+          <Sidebar current={'Appointments'}/>
+          <div style={{width: '100%'}}>Appointment</div>
           
         </div>
         }/>
