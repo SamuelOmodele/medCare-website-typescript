@@ -218,10 +218,19 @@ span.first{
     border-radius: 5px;
 }
 .edit-delete-box span{
-    font-size: 18px;
+    font-size: 15px;
     cursor: pointer;
     transition: .3s;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.edit-delete-box span span{
+    font-size: 18px;
 }
 .edit-delete-box span:hover{
-    color: #126FE9;
+    color: red;
+}
+.edit-delete-box span:hover span{
+    color: red;
 }

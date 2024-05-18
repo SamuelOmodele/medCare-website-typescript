@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './dashboard.css';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, getDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 type Appointment = {
@@ -159,6 +159,27 @@ const Dashboard = () => {
     }
   }
 
+  const deleteAppointment = async(id : string) => {
+    try{
+      const appointmentQuery = query(collection(db, 'AppointmentRecord'), where("uniqueId", "==", id ));
+      const querySnapshot = await getDocs(appointmentQuery);
+
+      if (querySnapshot.empty) {
+        console.log('Appointment does not exist.');
+        return;
+      }
+
+      querySnapshot.forEach(async (docSnapshot) => {
+        await deleteDoc(doc(db, 'AppointmentRecord', docSnapshot.id));
+        console.log(`Appointment Deleted`);
+        alert('Appointment Deleted');
+        window.location.reload();
+      });
+    } catch(error){
+      console.log('error deleting appointment', error);
+    }
+  }
+
   
 
   // --- scroll to top of the page when appointment is 
@@ -214,21 +235,27 @@ const Dashboard = () => {
                   return dateA - dateB; // Sort in descending order
                 })
                 .map((appointment, index) => { // --- sort display time in 12 hour format
-                  const appointmentDateTime = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
-                  const appointmentTime = appointmentDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                  
+                  const appointmentDateTime : Date = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
+                  const appointmentTime : string = appointmentDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                  const current_dateTime = new Date();
+                  const isAppointmentValid : boolean = (current_dateTime < appointmentDateTime);
+
                   return(
                   <div className="row" key={index}>
-                    <i className='bx bx-plus-medical'></i>
+
+                    {isAppointmentValid ? 
+                    <i className='bx bx-plus-medical'></i> : 
+                    <i style={{backgroundColor: 'red', fontSize: '20px'}}>!</i>
+                    }
                     <div>
-                      <h3>Appointment - {appointment.appointmentTitle}</h3>
+                      <h3>Appointment - {appointment.appointmentTitle} {isAppointmentValid? '': <span style={{color: 'red', fontWeight: '500', fontSize: '15px'}}> * Appointment Date Elapsed *</span>}</h3>
                       <p>Date: {appointment.appointmentDate} | Time: {appointmentTime}</p>
                     </div>
                     <span className="material-symbols-outlined right-arrow first" onClick={() => setActiveAppointment(appointment)}>info_i</span>
                     <span className="material-symbols-outlined right-arrow more" style={{right: '10px', fontSize: '20px'}} onClick={() => setID(appointment.uniqueId)}>more_vert</span>
                     {(activeEditDeleteID === appointment.uniqueId) && <div className="edit-delete-box">
-                      <span className="material-symbols-outlined edit-delete" >edit</span>
-                      <span className="material-symbols-outlined edit-delete" >delete</span>
+                      {/* <span className="material-symbols-outlined edit-delete" >edit</span> */}
+                      <span onClick={() => deleteAppointment(appointment.uniqueId)}>Delete<span className="material-symbols-outlined edit-delete">delete</span></span>
                     </div>}
                   </div>)
 

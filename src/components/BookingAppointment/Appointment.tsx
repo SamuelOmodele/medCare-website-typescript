@@ -101,7 +101,7 @@ const Appointment = () => {
           </div>
           <div className="form-control">
             <label htmlFor=''>Title <small>(15 characters max)</small></label>
-            <input type="text" name="title" id="title" placeholder='Title ...' value={appointmentTitle} onChange={(e) => setAppointmentTitle(e.target.value)} required max={15} />
+            <input type="text" name="title" id="title" placeholder='Title ...' value={appointmentTitle} onChange={(e) => setAppointmentTitle(e.target.value)} required maxLength={20} />
           </div>
           <div className="form-control">
             <label htmlFor="message">Enter Message</label>
