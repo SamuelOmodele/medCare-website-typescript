@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './dashboard.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, getDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
@@ -228,12 +228,13 @@ const Dashboard = () => {
               {userAppointmentList.length > 0 && <div className="medical-list">
                 {userAppointmentList
                 .slice()
-                .sort((a, b) => { // --- to sort appointment, latest comes first ---
+                .sort((a, b) => { // --- to sort appointment in descending order, latest comes first ---
                   const dateA = new Date(`${a.appointmentDate} ${a.appointmentTime}`).getTime();
                   const dateB = new Date(`${b.appointmentDate} ${b.appointmentTime}`).getTime();
-                  return dateA - dateB; // Sort in descending order
+                  return dateA - dateB;
                 })
-                .map((appointment, index) => { // --- sort display time in 12 hour format
+                .slice(0, 5) // --- display only the first five appointments ---
+                .map((appointment, index) => { // --- sort display time in 12 hour format ---
                   const appointmentDateTime : Date = new Date(`${appointment.appointmentDate} ${appointment.appointmentTime}`);
                   const appointmentTime : string = appointmentDateTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                   const current_dateTime = new Date();
@@ -259,6 +260,7 @@ const Dashboard = () => {
 
                 })}
               </div>}
+              {userAppointmentList.length > 5 && <Link to="/appointments" className='see_appointments'>See all appointments</Link>}
             </div>
             
             {activeAppointment &&

@@ -234,3 +234,14 @@ span.first{
 .edit-delete-box span:hover span{
     color: red;
 }
+.see_appointments{
+    float: right;
+    margin: 10px 0 15px;
+    text-decoration: none;
+    color: #126FE9;
+    display: block;
+    font-size: 15px;
+}
+.see_appointments:hover{
+    text-decoration: underline;
+}
