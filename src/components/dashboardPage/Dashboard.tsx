@@ -3,6 +3,8 @@ import './dashboard.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs, getDoc, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import ServicesBox from '../serviceBox/ServicesBox';
+import ActiveAppointment from '../active_appointment/ActiveAppointment';
 
 type Appointment = {
   uniqueId: string;
@@ -195,6 +197,7 @@ const Dashboard = () => {
 
   return (
     <div className='dashboard' ref={contentRef}>
+
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
@@ -205,24 +208,23 @@ const Dashboard = () => {
       </div>}
       
       <div className='body-section'>
+        
         {user && <>
           <div className="container">
-            <p className='head-text'><span className="material-symbols-outlined">Dashboard</span> Dashboard</p>
+
+            <p className='head-text'>
+              <span className="material-symbols-outlined">Dashboard</span> Dashboard
+            </p>
             
             <div className="boxes">
               {services.map((service, index) => (
-                <div className="box" onClick={service.functionCall} key={index}>
-                  <span className="material-symbols-outlined">{service.icon}</span>
-                  <div className="box-text">
-                    <p className="thick">{service.title}</p>
-                    <p className='small'>{service.description}</p>
-                  </div>
-                </div>
+                <ServicesBox service={service} key={index}/>
               ))}
             </div>
 
             <div className="container2">
               <p className='head-text'><span className="material-symbols-outlined">list</span> Electronic History</p>
+              
               {userAppointmentList.length === 0 && <p>No Appointment Created yet</p>}
 
               {userAppointmentList.length > 0 && <div className="medical-list">
@@ -248,7 +250,7 @@ const Dashboard = () => {
                     <i style={{backgroundColor: 'red', fontSize: '20px'}}>!</i>
                     }
                     <div>
-                      <h3>Appointment - {appointment.appointmentTitle} {isAppointmentValid? '': <span style={{color: 'red', fontWeight: '500', fontSize: '15px'}}> * Appointment Date Elapsed *</span>}</h3>
+                      <h3>Appointment - {appointment.appointmentTitle} {isAppointmentValid? '': <span style={{color: 'red', fontWeight: '500', fontSize: '15px'}}> * Elapsed *</span>}</h3>
                       <p>Date: {appointment.appointmentDate} | Time: {appointmentTime}</p>
                     </div>
                     <span className="material-symbols-outlined right-arrow first" onClick={() => setActiveAppointment(appointment)}>info_i</span>
@@ -256,38 +258,18 @@ const Dashboard = () => {
                     {(activeEditDeleteID === appointment.uniqueId) && <div className="edit-delete-box">
                       <span onClick={() => deleteAppointment(appointment.uniqueId)}>Delete<span className="material-symbols-outlined edit-delete">delete</span></span>
                     </div>}
+                    
                   </div>)
 
                 })}
               </div>}
+              
               {userAppointmentList.length > 5 && <Link to="/appointments" className='see_appointments'>See all appointments</Link>}
             </div>
             
             {activeAppointment &&
               <>
-                <div className="background"></div>
-                <div className="appointment-form modal rounded-border">
-                  <form action="">
-                    <span className="material-symbols-outlined" onClick={() => setActiveAppointment(null)}>close</span>
-                    <h2>Appointment Schedule</h2>
-                    <div className="form-control">
-                      <label htmlFor="">Appointment Date</label>
-                      <input type="date" name="date" id="date" value={activeAppointment.appointmentDate} readOnly/>
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="">Appointment Time</label>
-                      <input type="time" name="time" id="time" value={activeAppointment.appointmentTime} readOnly/>
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="">Appointment Title</label>
-                      <input type="text" name="title" id="title" value={activeAppointment.appointmentTitle} readOnly/>
-                    </div>
-                    <div className="form-control">
-                      <label htmlFor="">Message</label>
-                      <textarea name="message" id="message" cols={30} rows={6} placeholder='Enter your message ...' style={{ resize: 'none' }} value={activeAppointment.appointmentMsg} required readOnly></textarea>
-                    </div>
-                  </form>
-                </div>
+                <ActiveAppointment activeAppointment={activeAppointment} setActiveAppointment={setActiveAppointment}/>
               </>
             }
           </div>

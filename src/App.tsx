@@ -12,6 +12,7 @@ import Sidebar from './components/sidebarFolder/Sidebar';
 import Dashboard from './components/dashboardPage/Dashboard';
 import Appointment from './components/BookingAppointment/Appointment';
 import MedicalServices from './components/servicesPage/MedicalServices';
+import AppointmentList from './components/appointment_list/AppointmentList';
 
 function App() {
   return (
@@ -66,7 +67,9 @@ function App() {
         <Route path='/appointments' element={
         <div className='flex'>
           <Sidebar current={'Appointments'}/>
-          <div style={{width: '100%'}}>Appointment</div>
+          <div style={{width: '100%'}}>
+            <AppointmentList />
+          </div>
           
         </div>
         }/>

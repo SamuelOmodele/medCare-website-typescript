@@ -70,6 +70,7 @@ const Appointment = () => {
   // --- render ---
   return (
     <div className='appointment' ref={pageRef}>
+      
       <div className="dashboard-nav">
         <p>Medicare Health Clinic</p>
       </div>
