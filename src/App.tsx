@@ -13,6 +13,7 @@ import Dashboard from './components/dashboardPage/Dashboard';
 import Appointment from './components/BookingAppointment/Appointment';
 import MedicalServices from './components/servicesPage/MedicalServices';
 import AppointmentList from './components/appointment_list/AppointmentList';
+import Emergency from './components/emergency/Emergency';
 
 function App() {
   return (
@@ -73,6 +74,17 @@ function App() {
           
         </div>
         }/>
+
+        <Route path='/emergency' element={
+        <div className='flex'>
+          <Sidebar current={'Appointments'}/>
+          <div style={{width: '100%'}}>
+            <Emergency />
+          </div>
+          
+        </div>
+        }/>
+
       </Routes>
       
     </div>

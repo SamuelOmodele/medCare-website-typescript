@@ -121,6 +121,11 @@ const Dashboard = () => {
     navigate('/schedule-appointment');
   }
 
+  // --- navigate to emergency page
+  const goToEmergency = () => {
+    navigate('/emergency');
+  }
+
   const comingSoon = () => {
     setComingSoonAlert(true);
   }
@@ -146,7 +151,7 @@ const Dashboard = () => {
       description: 'Pay your bills hassle-free with our secure online portal. Convenient, efficient, and worry-free transactions'
     },
     {
-      functionCall: comingSoon,
+      functionCall: goToEmergency,
       icon: 'ambulance',
       title: 'Emergency',
       description: 'Urgent care when you need it most. Trust us for prompt and compassionate emergency services'
