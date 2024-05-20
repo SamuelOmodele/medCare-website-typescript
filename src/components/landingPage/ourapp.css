@@ -35,3 +35,19 @@
 .ourapp .content button{
     border: 1.5px solid #126FE9;
 }
+@media screen and (max-width: 900px) {
+    .ourapp{
+        flex-direction: column-reverse;
+    }
+    .ourapp .image{
+        width: 65%;
+    }
+}
+@media screen and (max-width: 650px){
+    .ourapp{
+        padding: 150px 80px 80px;
+    }
+    .ourapp .image{
+        width: 100%;
+    }
+}

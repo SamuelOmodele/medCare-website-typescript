@@ -46,6 +46,7 @@
     justify-content: space-between;
     margin-top: 60px;
     width: 80%;
+    /* background-color: red; */
 }
 .cards .card{
     flex-basis: 46%;
@@ -83,4 +84,39 @@ button:hover{
     background-color: #126FE9;
     color: #fff;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+@media screen and (max-width: 800px) {
+    .services{
+        padding: 150px 50px 80px;
+    }
+}
+@media screen and (max-width: 650px) {
+    .cards{
+        flex-direction: column;
+        width: 60%;
+    }
+    .cards .card{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .texts p{
+        max-width: 90%;
+        /* background-color: red; */
+        margin: auto;
+        margin-top: 35px;
+        color: #555;
+        line-height: 1.8;
+        font-size: 15px;
+    }
+    .cards{
+        flex-direction: column;
+        width: 80%;
+    }
+}
+@media screen and (max-width: 400px) {
+    .texts h2{
+        font-size: 28px;
+    }
+    
 }

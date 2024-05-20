@@ -39,3 +39,18 @@
     color: #458ff6;
 
 }
+@media screen and (max-width: 900px) {
+    .healthcareprovider{
+        flex-direction: column;
+        padding: 80px 100px 80px 100px;
+    }
+    .healthcareprovider .image{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 450px) {
+    .healthcareprovider{
+        flex-direction: column;
+        padding: 80px 50px;
+    }
+}

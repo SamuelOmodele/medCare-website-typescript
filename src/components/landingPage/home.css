@@ -1,6 +1,6 @@
 .home{
     width: 100%;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     background-color: #458ff6;
     display: flex;
     align-items: center;
@@ -40,8 +40,46 @@
 }
 .home .image{
     flex-basis: 50%;
-    /* background-color: red; */
 }
 .image img{
     width: 100%;
+}
+
+@media screen and (max-width: 1200px){
+    .home{
+        padding: 0 50px 0 100px;
+    }
+}
+@media screen and (max-width: 900px){
+    .home{
+        padding-top: 20px;
+        padding-bottom: 80px;
+        flex-direction: column-reverse;
+        height: fit-content;
+    }
+    .home .image{
+        width: 60%;
+    }
+    .home .content{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 650px){
+    .home{
+        padding: 20px 50px 80px;
+    }
+    .home .image{
+        width: 80%;
+    }
+    .home .content{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 550px){
+    .home{
+        padding: 30px 50px 80px;
+    }
+    .content h2{
+        font-size: 42px;
+    }
 }
