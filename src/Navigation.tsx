@@ -14,7 +14,6 @@ const Navigation  = ({ current_link } : NavigationProps) => {
   useEffect(() => {
 
     setShowNav(false);
-    console.log('set to false')
 
   }, [current_link])
 
@@ -32,7 +31,8 @@ const Navigation  = ({ current_link } : NavigationProps) => {
         <li className={current_link === 'about us' ? 'active' : ''}><Link to=''>About us</Link></li>
         <li className={current_link === 'login' ? 'active' : ''}><Link to='/login'>Login</Link></li>
       </ul>
-      <div className='menu-container'><span className="material-symbols-outlined menu-icon" onClick={() => setShowNav(prev => !prev)}>menu</span></div>
+      {!showNav && <div className='menu-container'><span className="material-symbols-outlined menu-icon" onClick={() => setShowNav(prev => !prev)}>menu</span></div>}
+      {showNav && <div className='menu-container'><span className="material-symbols-outlined menu-icon" onClick={() => setShowNav(prev => !prev)}>close</span></div>}
     </nav>
   )
 }

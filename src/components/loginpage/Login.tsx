@@ -14,7 +14,6 @@ const Login = () => {
   useEffect(() => {
     auth.signOut();
     localStorage.removeItem("userEmail");
-    console.log(localStorage)
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

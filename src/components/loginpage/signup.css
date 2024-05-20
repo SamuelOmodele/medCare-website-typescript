@@ -63,3 +63,16 @@
     margin-top: 10px;
     border-width: 1px;
 }
+@media screen and (max-width: 850px) {
+    .signup{
+        padding: 100px 50px;
+    }
+}
+@media screen and (max-width: 650px) {
+    .signup .card .signup-form{
+        width: 100%;
+    }
+    .signup .card .signup-image{
+        display: none;
+    }
+}

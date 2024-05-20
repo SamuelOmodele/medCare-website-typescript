@@ -68,23 +68,23 @@ const Signup = () => {
           <form action="" onSubmit={register}>
             <div className="form-control">
               <label htmlFor="">Full Name</label>
-              <input type="text" placeholder="Enter Full Name" id="" required value={name} onChange={(e) => setName(e.target.value)} />
+              <input type="text" placeholder="Enter Full Name" id="name" required value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="form-control">
               <label htmlFor="">Email</label>
-              <input type="text" placeholder="Enter Email" id="" required value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="text" placeholder="Enter Email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="form-control">
               <label htmlFor="">Password</label>
-              <input type="password" placeholder="Enter Password" id="" required value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input type="password" placeholder="Enter Password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div className="form-control">
               <label htmlFor="">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" id="" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input type="password" placeholder="Confirm Password" id="confirm" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
             <div className="form-control">
               <label htmlFor="">Phone</label>
-              <input type="number" placeholder="Contact" id="" required value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <input type="number" placeholder="Contact" id="phone" required value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
             <div className="form-control">
               <button type="submit">Sign Up</button>
