@@ -17,7 +17,7 @@ const ActiveAppointment = ({activeAppointment, setActiveAppointment}: activeAppo
     return (
         <>
             <div className="background"></div>
-            <div className="appointment-form modal rounded-border">
+            <div className="appointment-form modal rounded-border" style={{padding: '0'}}>
                 <form action="">
                     <span className="material-symbols-outlined" onClick={() => setActiveAppointment(null)}>close</span>
                     <h2>Appointment Schedule</h2>

@@ -29,3 +29,28 @@
     justify-content: center;
     color: white;
 }
+.back-btn{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+}
+.back-btn span{
+    color: #111;
+    font-weight: 400;
+    cursor: pointer;
+}
+.back-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #126FE9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.back-icon span{
+    color: #fff;
+    font-size: 18px;
+}

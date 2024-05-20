@@ -169,7 +169,7 @@ const AppointmentList = () => {
 
             <div className='body-section'>
                 {user && <>
-                    <div className="container">
+                    <div className="container" style={{minHeight: (activeAppointment)? '100vh': ''}}>
                         <p className='head-text'>
                             <span className="material-symbols-outlined">schedule</span> All Appointments
                         </p>
