@@ -1,0 +1,31 @@
+.emergency-box{
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+.emergency-box p{
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.emergency-box li{
+    list-style-type: none;
+    /* background-color: blue; */
+    line-height: 30px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.emergency-box li span{
+    font-size: 18px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-color: #126FE9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}

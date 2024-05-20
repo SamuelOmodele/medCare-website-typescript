@@ -77,7 +77,7 @@ function App() {
 
         <Route path='/emergency' element={
         <div className='flex'>
-          <Sidebar current={'Appointments'}/>
+          <Sidebar current={'Dashboard'}/>
           <div style={{width: '100%'}}>
             <Emergency />
           </div>
